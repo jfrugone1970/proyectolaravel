@@ -75,17 +75,3 @@ RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
-
-Nota:
-
-Este sistema de compra y venta de productos desarrollado en Laravel 5.7 es un framework de PHP, que permite desarrollado de código hermoso en Laravel y fácil de programar
-
-El presente sistema de compras y ventas de productos realizado en Laravel 5.7, Vue.js y Bootstrap es un sistema comercial de ventas y compras, para los interesado en adquirir este sistema me pueden escribir a mi correo: frugonejose1970@gmail.com, o mi correo: jfrugone1970@hotmail.com , Mi whatsapps es: +(593) 0992826240, el precio de este sistema es de $800 dólares negociables, para mayor información a los correos antes mencionado, o a mi whatsapps, para proyecto para fines educativos y/o comercio a pequeños negocios (Solo Ecuador - Provincia del Guayas - Guayaquil) (solo personas serias)
-
-Link de la base de datos de mi proyecto
-https://github.com/jfrugone1970/base_proyectolaravel
-
-
-
-
-
