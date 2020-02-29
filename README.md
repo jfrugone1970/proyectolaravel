@@ -1,9 +1,6 @@
 # Proyectolaravel
 
-<br>
-<img height="700" src="https://github.com/jfrugone1970/proyectolaravel/master/Sistema de compras ventas(Laravel).jpg" />
-<br>
-
+![GitHub Logo](https://assets-cdn.github.com/images/icons/emoji/octocat.png "GitHub")
 
 Sistema de Compras y Ventas en Laravel 5.7, Vue.js y Bootstrap
 El presente proyecto de Sistema de Compra y Venta de productos esta desarrollado en el framework de Laravel 5.7, Vue.js, y Boottraps es un sistema de Venta de productos, comprende los siguientes módulos:
