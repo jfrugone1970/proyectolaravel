@@ -1,7 +1,7 @@
 # Proyectolaravel
 
 <br>
-<img height="700" src="https://github.com/jfrugone1970/proyectolaravel/master/Sistema_Compras_Ventas(proyecto_laravel).jpg" />
+<img height="700" src="https://github.com/jfrugone1970/proyectolaravel/master/Sistema de compras ventas(Laravel).jpg" />
 <br>
 
 
