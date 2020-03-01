@@ -4139,6 +4139,7 @@ return array(
     'phpDocumentor\\Reflection\\Types\\Array_' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Array_.php',
     'phpDocumentor\\Reflection\\Types\\Boolean' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Boolean.php',
     'phpDocumentor\\Reflection\\Types\\Callable_' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Callable_.php',
+    'phpDocumentor\\Reflection\\Types\\ClassString' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/ClassString.php',
     'phpDocumentor\\Reflection\\Types\\Collection' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Collection.php',
     'phpDocumentor\\Reflection\\Types\\Compound' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Compound.php',
     'phpDocumentor\\Reflection\\Types\\Context' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Context.php',
