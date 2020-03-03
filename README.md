@@ -87,3 +87,8 @@ RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
+
+Para mayor información visita la página WEB
+
+<a href="https://laravel.com/docs/5.7" target="_blank">Instalacion de Laravel - dar click para mayor informacion</a>
+
