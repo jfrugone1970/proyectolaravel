@@ -51,6 +51,11 @@ composer global require laravel/installer
 
 Una vez instalado, el comando creará una nueva instalación de Laravel en el directorio que especifique. Por ejemplo, creará un directorio llamado que contiene una nueva instalación de Laravel con todas las dependencias de Laravel ya instaladas:laravel newlaravel new blogblog
 
+Esta informacion es obtenida en el manual de Laravel
+
+<a href="https://laravel.com/docs/5.7" target="_blank">Manual de Laravel - dar click para mayor informacion</a>
+
+
 laravel new blog
 
 Servidor de desarrollo local
