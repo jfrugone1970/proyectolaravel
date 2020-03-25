@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Tarjeta;
 use App\Banco;
 use App\Cliente;
@@ -129,8 +130,9 @@ class TarjetaController extends Controller
 
         $cont=ClienteTarjeta::count();
 
+        $hoy = Carbon::now()->format('d/m/Y');
         $pdf= \PDF::loadView('pdf.tarjetaspdf',['clientetar'=>$clientetar,'cont'=>$cont]);
-        return $pdf->download('tarjetas.pdf');
+        return $pdf->download('tarjetas-'.$hoy.'.pdf');
         
 
     }
@@ -148,8 +150,8 @@ class TarjetaController extends Controller
             $tarjetas = ClienteTarjeta::join('clientes','clientes_tarjetas.idcliente','=','clientes.id')
             ->join('tarjeta','clientes_tarjetas.idtarjeta','=','tarjeta.id')
             ->join('bancos','clientes_tarjetas.idbanco','=','bancos.id')
-            ->select('clientes_tarjetas.id','clientes_tarjetas.idcliente','clientes_tarjetas.idtarjeta','clientes_tarjetas.idbanco',
-            'clientes_tarjetas.ntarjeta','clientes_tarjetas.estado','bancos.nombre as nombre_banco',
+            ->select('clientes_tarjetas.id','clientes_tarjetas.idcliente','clientes_tarjetas.idtarjeta','clientes_tarjetas.tarjeta',
+            'clientes_tarjetas.idbanco','clientes_tarjetas.ntarjeta','clientes_tarjetas.estado','bancos.nombre as nombre_banco',
             'clientes.nombre as nombre_cliente','clientes_tarjetas.created_at','tarjeta.nombre as nombre_tarjeta')
             ->orderBy('clientes_tarjetas.id', 'desc')->paginate(3);
 
@@ -159,7 +161,7 @@ class TarjetaController extends Controller
             $tarjetas = ClienteTarjeta::join('clientes','clientes_tarjetas.idcliente','=','clientes.id')
             ->join('tarjeta','clientes_tarjetas.idtarjeta','=','tarjeta.id')
             ->join('bancos','clientes_tarjetas.idbanco','=','bancos.id')
-            ->select('clientes_tarjetas.id','clientes_tarjetas.idcliente','clientes_tarjetas.idtarjeta','clientes_tarjetas.idbanco',
+            ->select('clientes_tarjetas.id','clientes_tarjetas.idcliente','clientes_tarjetas.idtarjeta','clientes_tarjetas.tarjeta','clientes_tarjetas.idbanco',
             'clientes_tarjetas.ntarjeta','clientes_tarjetas.estado','bancos.nombre as nombre_banco',
             'clientes.nombre as nombre_cliente','clientes_tarjetas.created_at','tarjeta.nombre as nombre_tarjeta')
             ->where('clientes_tarjetas.'.$criterio, 'like', '%'. $buscar . '%')

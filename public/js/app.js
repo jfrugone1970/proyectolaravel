@@ -48377,6 +48377,97 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -48428,7 +48519,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             },
 
+            pagination2: {
+
+                'total': 0,
+                'current_page': 0,
+                'per_page': 0,
+                'last_page': 0,
+                'from': 0,
+                'to': 0
+
+            },
+
             offset: 3,
+            offset2: 3,
             criterio: 'num_venta',
             buscar: '',
             criterioP: 'nombre',
@@ -48437,6 +48540,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             criterioQ: 'nombre_cliente',
             buscarR: '',
             criterioR: 'nombre_cliente',
+            criterioS: 'factura',
+            buscarS: '',
+            arrayPago: [],
             arrayProducto: [],
             idproducto: 0,
             codigo: '',
@@ -48459,6 +48565,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         isActived: function isActived() {
 
             return this.pagination.current_page;
+            return this.pagination2.current_page;
         },
 
         //calcula los elementos de la paginacion
@@ -48469,25 +48576,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return [];
             }
 
+            if (!this.pagination2.to) {
+
+                return [];
+            }
+
             var from = this.pagination.current_page - this.offset;
+            var desde = this.pagination2.current_page - this.offset2;
+
             if (from < 1) {
 
                 from = 1;
             }
 
+            if (desde < 1) {
+
+                desde = 1;
+            }
+
             var to = from + this.offset * 2;
+            var hasta = desde + this.offset2 * 2;
+
             if (to >= this.pagination.last_page) {
 
                 to = this.pagination.last_page;
             }
 
+            if (hasta >= this.pagination2.last_page) {
+
+                hasta = this.pagination2.last_page;
+            }
+
             var pagesArray = [];
+            var pageArray1 = [];
+
             while (from <= to) {
 
                 pagesArray.push(from);
                 from++;
             }
-            return pagesArray;
+
+            while (desde <= hasta) {
+
+                pageArray1.push(desde);
+                desde++;
+            }
+
+            return pagesArray, pageArray1;
         },
 
         calcularTotal: function calcularTotal() {
@@ -48515,6 +48650,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var respuesta = response.data;
                 me.arrayVenta = respuesta.ventas.data;
                 me.pagination = respuesta.pagination;
+            }).catch(function (error) {
+                // handle error
+                console.log(error);
+            });
+        },
+        listarPagos: function listarPagos(page, buscarS, criterioS) {
+
+            var me = this;
+
+            var axios = __webpack_require__(0);
+
+            var url = '/pago/listar?page=' + page + '&buscar=' + buscarS + '&criterio=' + criterioS;
+
+            axios.get(url).then(function (response) {
+                // handle success
+                //console.log(response);
+                var respuesta = response.data;
+                me.arrayPago = respuesta.pago.data;
+                me.pagination2 = respuesta.pagination;
             }).catch(function (error) {
                 // handle error
                 console.log(error);
@@ -48561,6 +48715,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
             });
+            /* Verifica datos en arreglo*/
+            if (me.arrayCliente.length > 0) {
+
+                me.cliente = me.arrayCliente[0]['nombre'];
+            }
         },
         getDatosCliente: function getDatosCliente(val1) {
             var me = this;
@@ -48626,6 +48785,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
             });
+
+            /* asigna nombre de cliente */
+
+            if (me.arrayCliente.length > 0) {
+                me.cliente = me.arrayCliente[0]['nombre'];
+            }
         },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
 
@@ -48636,6 +48801,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             me.pagination.current_page = page;
 
             me.listarVenta(page, buscar, criterio);
+        },
+        cambiarPagina2: function cambiarPagina2(page, buscarS, criterioS) {
+
+            var me = this;
+
+            //Actualiza la pagina actual
+
+            me.pagination2.current_page = page;
+
+            me.listarPagos(page, buscarS, criteriorS);
         },
         encuentra: function encuentra(id) {
             var sw = 0;
@@ -48655,6 +48830,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var me = this;
 
             /*para las formas de pago en efectivo*/
+
+            if (me.idforma == 0) {
+
+                swal({
+                    type: 'error',
+                    title: 'Error....',
+                    text: 'Debe seleccionar forma de pago'
+                });
+            }
 
             if (me.idforma == 1) {
 
@@ -48767,7 +48951,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.forma_pago = 'Cheque';
                 me.idcliente = data["idcliente"];
                 me.idbanco1 = data["idbanco"];
+                me.nombre_banco = data["banco"];
                 me.idtarjeta1 = data["idtarjeta"];
+                me.nombre_tarjeta = 'Sin Tarjeta';
                 me.valor = me.total;
                 swal({
                     type: 'info',
@@ -48797,6 +48983,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 me.idcliente = data["idcliente"];
                 me.idbanco1 = data["idbanco"];
                 me.idtarjeta1 = data["idtarjeta"];
+                me.nombre_tarjeta = data["ntarjeta"];
                 me.valor = me.total;
                 /*cuadro de dialogo en el momento que asigna datos*/
                 swal({
@@ -48875,105 +49062,94 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 }).then(function (response) {
                     /*no hace nada solo si es en efectivo*/
-                    if (me.idforma == 1) {
-                        me.listado = 1;
-                        me.listarVenta(1, '', 'num_venta');
-                        me.tipo_identificacion = 'FACTURA';
-                        me.idcliente = 0;
-                        me.num_venta = '';
-                        me.impuesto = 0.12;
-                        me.total = 0.0;
-                        me.idproducto = 0;
-                        me.producto = '';
-                        me.cantidad = 0;
-                        me.precio = 0;
-                        me.stock = 0;
-                        me.codigo = '';
-                        me.descuento = 0;
-                        me.arrayDetalle = [];
-                    } else {
-                        swal({
-                            type: 'info',
-                            title: 'Informacion',
-                            text: 'Se registro la venta pero tiene que registrar el pago'
-                        });
-                    }
+                    me.listado = 1;
+                    me.listarVenta(1, '', 'num_venta');
+                    me.tipo_identificacion = 'FACTURA';
+                    me.idcliente = 0;
+                    me.num_venta = '';
+                    me.impuesto = 0.12;
+                    me.total = 0.0;
+                    me.idproducto = 0;
+                    me.producto = '';
+                    me.cantidad = 0;
+                    me.precio = 0;
+                    me.stock = 0;
+                    me.codigo = '';
+                    me.descuento = 0;
+                    me.arrayDetalle = [];
                 }).catch(function (error) {
                     console.log(error);
                 });
             }
         },
-        registraPagoCheque: function registraPagoCheque() {
+        registraPago: function registraPago() {
 
             var me = this;
 
-            me.forma_pago = 'Cheque';
+            if (me.idforma == 2) {
 
-            me.idtarjeta1 = 99;
+                me.forma_pago = 'Cheque';
 
-            var axios = __webpack_require__(0);
+                me.idtarjeta1 = 99;
 
-            axios.post('/pago/pagar', {
-                'tipo_pago': this.forma_pago,
-                'idcliente': this.idcliente,
-                'idbanco': this.idbanco1,
-                'idtarjeta': this.idtarjeta1,
-                'valor': this.valor
+                var axios = __webpack_require__(0);
 
-            }).then(function (response) {
-                me.listado = 1;
-                me.listarVenta(1, '', 'num_venta');
-                me.tipo_identificacion = 'FACTURA';
-                me.idcliente = 0;
-                me.num_venta = '';
-                me.impuesto = 0.12;
-                me.total = 0.0;
-                me.idproducto = 0;
-                me.producto = '';
-                me.cantidad = 0;
-                me.precio = 0;
-                me.stock = 0;
-                me.codigo = '';
-                me.descuento = 0;
-                me.arrayDetalle = [];
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        registraPagoTarjeta: function registraPagoTarjeta() {
+                axios.post('/pago/pagar', {
+                    'factura': this.num_venta,
+                    'tipo_pago': this.forma_pago,
+                    'idcliente': this.idcliente,
+                    'nombre': this.cliente,
+                    'idbanco': this.idbanco1,
+                    'nombre_banco': this.nombre_banco,
+                    'idtarjeta': this.idtarjeta1,
+                    'nombre_tarjeta': this.nombre_tarjeta,
+                    'valor': this.valor
 
-            var me = this;
+                }).then(function (response) {
+                    me.tipo_identificacion = 'FACTURA';
+                    me.impuesto = 0.12;
+                }).catch(function (error) {
+                    console.log(error);
+                });
 
-            me.forma_pago = 'Tarjeta';
+                swal({
+                    type: 'info',
+                    title: 'Informacion',
+                    text: 'Se registro el pago con Cheque'
+                });
+            }
 
-            var axios = __webpack_require__(0);
+            /**Registra pago en Tarjeta */
+            if (me.idforma == 3) {
 
-            axios.post('/pago/pagar', {
-                'tipo_pago': this.forma_pago,
-                'idcliente': this.idcliente,
-                'idbanco': this.idbanco1,
-                'idtarjeta': this.idtarjeta1,
-                'valor': this.valor
+                me.forma_pago = 'Tarjeta';
 
-            }).then(function (response) {
-                me.listado = 1;
-                me.listarVenta(1, '', 'num_venta');
-                me.tipo_identificacion = 'FACTURA';
-                me.idcliente = 0;
-                me.num_venta = '';
-                me.impuesto = 0.12;
-                me.total = 0.0;
-                me.idproducto = 0;
-                me.producto = '';
-                me.cantidad = 0;
-                me.precio = 0;
-                me.stock = 0;
-                me.codigo = '';
-                me.descuento = 0;
-                me.arrayDetalle = [];
-            }).catch(function (error) {
-                console.log(error);
-            });
+                var _axios = __webpack_require__(0);
+
+                _axios.post('/pago/pagar', {
+                    'factura': this.num_venta,
+                    'tipo_pago': this.forma_pago,
+                    'idcliente': this.idcliente,
+                    'nombre': this.cliente,
+                    'idbanco': this.idbanco1,
+                    'nombre_banco': this.nombre_banco,
+                    'idtarjeta': this.idtarjeta1,
+                    'nombre_tarjeta': this.nombre_tarjeta,
+                    'valor': this.valor
+
+                }).then(function (response) {
+                    me.tipo_identificacion = 'FACTURA';
+                    me.impuesto = 0.12;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+                swal({
+                    type: 'info',
+                    title: 'Informacion',
+                    text: 'Se registro el pago con Tarjeta'
+                });
+            }
         },
         validarVenta: function validarVenta() {
 
@@ -48996,6 +49172,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!me.num_venta) me.errorMostrarMsjVenta.push("Ingrese el número de venta");
             if (!me.impuesto) me.errorMostrarMsjVenta.push("Ingrese el impuesto de venta");
             if (me.arrayDetalle.length <= 0) me.errorMostrarMsjVenta.push("Ingrese detalles");
+
+            if (me.arrayFormaPago.length == 0) me.errorMostrarMsjVenta.push("Debe escoger una forma de pago");
+
+            /*Validar si no se registro la forma de pago*/
+            if (me.idforma == 0) {
+
+                me.errorMostrarMsjVenta.push("Debe seleccionar tipo de forma de pago..");
+            }
 
             /*Validar para el tipo de forma de pago*/
             if (me.idforma == 2) {
@@ -49027,7 +49211,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             me.idproveedor = 0;
             me.tipo_identificacion = 'FACTURA';
             me.num_compra = '';
-            me.impuesto = 0.20;
+            me.impuesto = 0.12;
             me.total = 0.0;
             me.idproducto = 0;
             me.producto = '';
@@ -49035,7 +49219,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             me.precio = 0;
             me.arrayDetalle = [];
         },
+        mostrarPagos: function mostrarPagos() {
+
+            var me = this;
+            me.listado = 3;
+            me.idproveedor = 0;
+            me.tipo_identificacion = 'FACTURA';
+            me.num_compra = '';
+            me.impuesto = 0.12;
+            me.arrayPago = [];
+        },
         ocultarDetalle: function ocultarDetalle() {
+            this.listado = 1;
+        },
+        ocultarPagos: function ocultarPagos() {
             this.listado = 1;
         },
         verVenta: function verVenta(id) {
@@ -49201,6 +49398,23 @@ var render = function() {
                     [
                       _c("i", { staticClass: "fa fa-plus fa-2x" }),
                       _vm._v("  Nueva Venta\n                     ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-lg",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.mostrarPagos()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-plus fa-2x" }),
+                      _vm._v("  Pagos\n                     ")
                     ]
                   )
                 ]),
@@ -50046,43 +50260,22 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm.idforma == 2
-                          ? _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-primary form-control btnagregar",
-                                on: {
-                                  click: function($event) {
-                                    _vm.registraPagoCheque()
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fa fa-plus fa-2x" }),
-                                _vm._v(" Reg Pago Cheque")
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.idforma == 3
-                          ? _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-primary form-control btnagregar",
-                                on: {
-                                  click: function($event) {
-                                    _vm.registraPagoTarjeta()
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fa fa-plus fa-2x" }),
-                                _vm._v(" Reg Pago Tarjeta")
-                              ]
-                            )
-                          : _vm._e()
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-primary form-control btnagregar",
+                            on: {
+                              click: function($event) {
+                                _vm.registraPago()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-plus fa-2x" }),
+                            _vm._v(" Reg Pago")
+                          ]
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -50635,6 +50828,278 @@ var render = function() {
                   ])
                 ])
               ]
+            : _vm.listado == 3
+            ? [
+                _vm._m(23),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.criterioS,
+                                expression: "criterioS"
+                              }
+                            ],
+                            staticClass: "form-control col-md-3",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.criterioS = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "tipo_identificacion" } },
+                              [_vm._v("Tipo identificación")]
+                            ),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "factura" } }, [
+                              _vm._v("num_factura")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "idcliente" } }, [
+                              _vm._v("cliente")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.buscarS,
+                              expression: "buscarS"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "Buscar texto" },
+                          domProps: { value: _vm.buscarS },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !("button" in $event) &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              _vm.listarPagos(1, _vm.buscarS, _vm.criterioS)
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.buscarS = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                _vm.listarPagos(1, _vm.buscarS, _vm.criterioS)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-search" }),
+                            _vm._v(" Buscar")
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-bordered table-striped table-sm"
+                    },
+                    [
+                      _vm._m(24),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.arrayPago, function(pago) {
+                          return _c("tr", { key: pago.id }, [
+                            _c("td", {
+                              domProps: { textContent: _vm._s(pago.factura) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(pago.tipo_pago) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(pago.idcliente) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(pago.nombre) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(pago.idbanco) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(pago.nombre_banco)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(pago.idtarjeta) }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: {
+                                textContent: _vm._s(pago.nombre_tarjeta)
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("td", {
+                              domProps: { textContent: _vm._s(pago.valor) }
+                            })
+                          ])
+                        })
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("nav", [
+                    _c(
+                      "ul",
+                      { staticClass: "pagination" },
+                      [
+                        _vm.pagination2.current_page > 1
+                          ? _c("li", { staticClass: "page-item" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "page-link",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.cambiarPagina2(
+                                        _vm.pagination2.current_page - 1,
+                                        _vm.buscarS,
+                                        _vm.criterioS
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Anterior")]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._l(_vm.pagesNumber, function(page) {
+                          return _c(
+                            "li",
+                            {
+                              key: page,
+                              staticClass: "page-item",
+                              class: [page == _vm.isActived ? "active" : ""]
+                            },
+                            [
+                              _c("a", {
+                                staticClass: "page-link",
+                                attrs: { href: "#" },
+                                domProps: { textContent: _vm._s(page) },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.cambiarPagina2(
+                                      page,
+                                      _vm.buscarS,
+                                      _vm.criterioS
+                                    )
+                                  }
+                                }
+                              })
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _vm.pagination2.current_page < _vm.pagination2.last_page
+                          ? _c("li", { staticClass: "page-item" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "page-link",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.cambiarPagina2(
+                                        _vm.pagination2.current_page + 1,
+                                        _vm.buscarS,
+                                        _vm.criterioS
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Siguiente")]
+                              )
+                            ])
+                          : _vm._e()
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.ocultarPagos()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-times fa-2x" }),
+                          _vm._v(" Cerrar")
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ]
             : _vm._e()
         ],
         2
@@ -50795,7 +51260,7 @@ var render = function() {
                       staticClass: "table table-bordered table-striped table-sm"
                     },
                     [
-                      _vm._m(23),
+                      _vm._m(25),
                       _vm._v(" "),
                       _c(
                         "tbody",
@@ -51072,7 +51537,7 @@ var render = function() {
                       staticClass: "table table-bordered table-striped table-sm"
                     },
                     [
-                      _vm._m(24),
+                      _vm._m(26),
                       _vm._v(" "),
                       _c(
                         "tbody",
@@ -51335,7 +51800,7 @@ var render = function() {
                       staticClass: "table table-bordered table-striped table-sm"
                     },
                     [
-                      _vm._m(25),
+                      _vm._m(27),
                       _vm._v(" "),
                       _c(
                         "tbody",
@@ -51669,6 +52134,41 @@ var staticRenderFns = [
         _vm._v(
           "\n                                         No se han agregado productos\n                                     "
         )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h2", [_vm._v("Listado de Pagos")]),
+      _c("br")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-primary" }, [
+        _c("th", [_vm._v("Factura")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tipo_Pago")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("IdCliente")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("cliente")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("idBanco")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Banco")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("idTarjeta")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tarjeta")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Valor")])
       ])
     ])
   },

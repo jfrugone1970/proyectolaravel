@@ -16,6 +16,10 @@
                         <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
                         </button>
+
+                        <button class="btn btn-primary btn-lg" type="button" @click="mostrarPagos()">
+                            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Pagos
+                        </button>
                     </div>
                     <!--listado-->
                    
@@ -265,8 +269,7 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button v-if="idforma==2" @click="registraPagoCheque()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Reg Pago Cheque</button>
-                                    <button v-if="idforma==3" @click="registraPagoTarjeta()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Reg Pago Tarjeta</button>
+                                    <button @click="registraPago()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Reg Pago</button>
                                 </div>
 
                             </div>
@@ -455,6 +458,94 @@
                    </template>
                     
                   <!-- fin ver compra-->
+
+                  <!-- Ver pagos -->
+
+                  <template v-else-if="listado==3">
+                    <div class="card-header">
+
+                       <h2>Listado de Pagos</h2><br/>
+                      
+                    </div>
+                    <!--listado-->
+                   
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select class="form-control col-md-3" v-model="criterioS">
+                                      <option value="tipo_identificacion">Tipo identificación</option>  
+                                      <option value="factura">num_factura</option>
+                                      <option value="idcliente">cliente</option>
+                                    </select>
+                                    <input type="text"  @keyup.enter="listarPagos(1,buscarS,criterioS);" v-model="buscarS" class="form-control" placeholder="Buscar texto">
+                                    <button type="submit"  @click="listarPagos(1,buscarS,criterioS);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr class="bg-primary">
+                                   
+                                        <th>Factura</th>
+                                        <th>Tipo_Pago</th>
+                                        <th>IdCliente</th>
+                                        <th>cliente</th>
+                                        <th>idBanco</th>
+                                        <th>Banco</th>
+                                        <th>idTarjeta</th>
+                                        <th>Tarjeta</th>
+                                        <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                <tr v-for="pago in arrayPago" :key="pago.id">
+                                    
+                                        <td v-text="pago.factura"></td>
+                                        <td v-text="pago.tipo_pago"></td>
+                                        <td v-text="pago.idcliente"></td>
+                                        <td v-text="pago.nombre"></td>
+                                        <td v-text="pago.idbanco"></td>
+                                        <td v-text="pago.nombre_banco"></td>
+                                        <td v-text="pago.idtarjeta"></td>
+                                        <td v-text="pago.nombre_tarjeta"></td>
+                                        <td v-text="pago.valor"></td>
+                      
+                                    
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item" v-if="pagination2.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina2(pagination2.current_page - 1,buscarS,criterioS)">Anterior</a>
+                                </li>
+
+                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina2(page,buscarS,criterioS)" v-text="page"></a>
+                                </li>
+                               
+                               
+                                <li class="page-item" v-if="pagination2.current_page < pagination2.last_page">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina2(pagination2.current_page + 1,buscarS,criterioS)">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                         <div class="form-group row">
+                        <div class="col-md-12">
+                            <button type="button" @click="ocultarPagos()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
+                            
+                        </div>
+                    </div>
+                    </div>
+                    </template>
+                    
+
+                  <!-- Fin Ver pagos-->
+
 
 
                 </div>
@@ -783,7 +874,19 @@
            
                 },
 
+                pagination2:{
+                     
+                    'total': 0,
+                    'current_page': 0,
+                    'per_page': 0,
+                    'last_page': 0,
+                    'from': 0,
+                    'to': 0,
+
+                },
+
                 offset:3,
+                offset2:3,
                 criterio:'num_venta',
                 buscar:'',
                 criterioP:'nombre',
@@ -792,6 +895,9 @@
                 criterioQ:'nombre_cliente',
                 buscarR: '',
                 criterioR: 'nombre_cliente',
+                criterioS: 'factura',
+                buscarS: '',
+                arrayPago: [],
                 arrayProducto: [],
                 idproducto: 0,
                 codigo: '',
@@ -814,9 +920,11 @@
             isActived: function(){
               
               return this.pagination.current_page;
+              return this.pagination2.current_page;
               
             },
 
+        
              //calcula los elementos de la paginacion
             pagesNumber: function(){
 
@@ -825,26 +933,56 @@
                     return[];
                 }
 
+                if(!this.pagination2.to){
+
+                    return[];
+                }
+
                 var from = this.pagination.current_page - this.offset;
+                var desde = this.pagination2.current_page - this.offset2;
+
                 if(from < 1){
                    
                    from = 1;
                 }
 
+                if(desde < 1){
+
+                    desde = 1;
+
+                }
+
                 var to = from + (this.offset * 2);
+                var hasta = desde + (this.offset2 * 2);
+              
                 if(to >= this.pagination.last_page){
                     
                    to = this.pagination.last_page; 
                 }
 
+                if(hasta >= this.pagination2.last_page){
+
+                    hasta = this.pagination2.last_page;
+
+                }
+
                 var pagesArray = [];
+                var pageArray1 = [];
+
                 while(from <= to){
                    
                    pagesArray.push(from);
                    from++;
                 }
-                return pagesArray;
 
+                while(desde <= hasta){
+
+                    pageArray1.push(desde);
+                    desde++;
+                }
+                
+                return pagesArray,pageArray1;
+         
                
             },
 
@@ -883,6 +1021,32 @@
                 });
 
            },
+
+           listarPagos(page,buscarS,criterioS){
+
+               let me = this;
+
+               const axios = require('axios');
+
+               var url= '/pago/listar?page=' + page + '&buscar='+ buscarS + '&criterio='+criterioS;
+
+               axios.get(url).then(function (response) {
+                    // handle success
+                    //console.log(response);
+                    var respuesta = response.data;
+                    me.arrayPago=respuesta.pago.data;
+                    me.pagination2= respuesta.pagination;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+
+
+
+
+           },
+
 
            buscarNumVenta(){
 
@@ -931,6 +1095,13 @@
                 .catch(function (error) {
                     console.log(error);
                 });
+                /* Verifica datos en arreglo*/
+                if(me.arrayCliente.length>0){
+
+                    me.cliente=me.arrayCliente[0]['nombre'];
+                    
+                }
+
             },
             
             getDatosCliente(val1){
@@ -1005,11 +1176,18 @@
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     me.arrayCliente = respuesta.clientes;
-
+          
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+
+                /* asigna nombre de cliente */
+
+                if(me.arrayCliente.length>0){
+                    me.cliente = me.arrayCliente[0]['nombre'];
+
+                }
             },
 
 
@@ -1026,6 +1204,19 @@
                me.listarVenta(page,buscar,criterio);
 
            },
+
+           cambiarPagina2(page,buscarS,criterioS){
+
+               let me = this;
+
+               //Actualiza la pagina actual
+
+               me.pagination2.current_page=page;
+
+               me.listarPagos(page,buscarS,criteriorS);
+           
+           },
+
 
             encuentra(id){
                 var sw=0;
@@ -1046,7 +1237,19 @@
 
                 let me = this;
 
+                                
                 /*para las formas de pago en efectivo*/
+
+                if(me.idforma==0){
+                  
+                  swal({
+                        type: 'error',
+                        title: 'Error....',
+                        text: 'Debe seleccionar forma de pago',
+                  })
+
+                }
+               
 
                 if(me.idforma==1){
 
@@ -1173,7 +1376,9 @@
                     me.forma_pago='Cheque';
                     me.idcliente=data["idcliente"];
                     me.idbanco1=data["idbanco"];
+                    me.nombre_banco=data["banco"];
                     me.idtarjeta1=data["idtarjeta"];
+                    me.nombre_tarjeta='Sin Tarjeta';
                     me.valor=me.total;
                     swal({
                         type: 'info',
@@ -1205,6 +1410,7 @@
                    me.idcliente = data["idcliente"];
                    me.idbanco1 = data["idbanco"];
                    me.idtarjeta1 = data["idtarjeta"];
+                   me.nombre_tarjeta = data["ntarjeta"];
                    me.valor = me.total;
                    /*cuadro de dialogo en el momento que asigna datos*/
                    swal({
@@ -1301,7 +1507,6 @@
             
                     }).then(function (response) {
                        /*no hace nada solo si es en efectivo*/
-                       if(me.idforma==1){
                                 me.listado=1;
                                 me.listarVenta(1,'','num_venta');
                                 me.tipo_identificacion='FACTURA';
@@ -1318,106 +1523,96 @@
                                 me.descuento=0;
                                 me.arrayDetalle=[];
       
-                       }
-                       else {
-                           swal({
-                               type: 'info',
-                               title: 'Informacion',
-                               text: 'Se registro la venta pero tiene que registrar el pago'
-                           })
-                       }            
                     }).catch(function (error) {
                         console.log(error);
                     });
-
-               
 
               }
                
            },
 
-           registraPagoCheque(){
-
+           registraPago(){
+              
                            let me = this;
 
-                           me.forma_pago = 'Cheque';
+                           if(me.idforma==2){
 
-                           me.idtarjeta1 = 99;
-                           
-                            const axios = require('axios');
+                               me.forma_pago = 'Cheque';
 
-                            axios.post('/pago/pagar',{
-                                'tipo_pago': this.forma_pago,
-                                'idcliente': this.idcliente,
-                                'idbanco': this.idbanco1,
-                                'idtarjeta': this.idtarjeta1,
-                                'valor': this.valor
-                        
-                            }).then(function (response) {
-                                    me.listado=1;
-                                    me.listarVenta(1,'','num_venta');
-                                    me.tipo_identificacion='FACTURA';
-                                    me.idcliente=0;
-                                    me.num_venta='';
-                                    me.impuesto=0.12;
-                                    me.total=0.0;
-                                    me.idproducto=0;
-                                    me.producto='';
-                                    me.cantidad=0;
-                                    me.precio=0;
-                                    me.stock=0;
-                                    me.codigo='';
-                                    me.descuento=0;
-                                    me.arrayDetalle=[];
-      
-                            }).catch(function (error) {
-                                console.log(error);
-                            });
+                                    me.idtarjeta1 = 99;
+                                    
+                                        const axios = require('axios');
 
-        
-           },
+                                        axios.post('/pago/pagar',{
+                                            'factura': this.num_venta,
+                                            'tipo_pago': this.forma_pago,
+                                            'idcliente': this.idcliente,
+                                            'nombre': this.cliente,
+                                            'idbanco': this.idbanco1,
+                                            'nombre_banco': this.nombre_banco,
+                                            'idtarjeta': this.idtarjeta1,
+                                            'nombre_tarjeta': this.nombre_tarjeta,
+                                            'valor': this.valor
+                                    
+                                        }).then(function (response) {
+                                                me.tipo_identificacion='FACTURA';
+                                                me.impuesto=0.12;
+                                                
+                                        }).catch(function (error) {
+                                            console.log(error);
+                                        });
 
-           registraPagoTarjeta(){
+                                    swal({
+                                        type: 'info',
+                                        title: 'Informacion',
+                                        text: 'Se registro el pago con Cheque'
+                                    })    
 
-                          let me = this;
+                    
 
-                          me.forma_pago = 'Tarjeta';
+                            }
+
+                            /**Registra pago en Tarjeta */
+                            if(me.idforma==3){
+
+                                me.forma_pago = 'Tarjeta';
                        
-                          const axios = require('axios');
+                                const axios = require('axios');
 
-                            axios.post('/pago/pagar',{
-                                'tipo_pago': this.forma_pago,
-                                'idcliente': this.idcliente,
-                                'idbanco': this.idbanco1,
-                                'idtarjeta': this.idtarjeta1,
-                                'valor': this.valor
-                        
-                            }).then(function (response) {
-                                    me.listado=1;
-                                    me.listarVenta(1,'','num_venta');
-                                    me.tipo_identificacion='FACTURA';
-                                    me.idcliente=0;
-                                    me.num_venta='';
-                                    me.impuesto=0.12;
-                                    me.total=0.0;
-                                    me.idproducto=0;
-                                    me.producto='';
-                                    me.cantidad=0;
-                                    me.precio=0;
-                                    me.stock=0;
-                                    me.codigo='';
-                                    me.descuento=0;
-                                    me.arrayDetalle=[];
-      
-                            }).catch(function (error) {
-                                console.log(error);
-                            });
+                                    axios.post('/pago/pagar',{
+                                        'factura': this.num_venta,
+                                        'tipo_pago': this.forma_pago,
+                                        'idcliente': this.idcliente,
+                                        'nombre': this.cliente,
+                                        'idbanco': this.idbanco1,
+                                        'nombre_banco': this.nombre_banco,
+                                        'idtarjeta': this.idtarjeta1,
+                                        'nombre_tarjeta': this.nombre_tarjeta,
+                                        'valor': this.valor
+                                
+                                    }).then(function (response) {
+                                            me.tipo_identificacion='FACTURA';
+                                            me.impuesto=0.12;
+                                    
+                                    }).catch(function (error) {
+                                        console.log(error);
+                                    });
 
-        
+                                    swal({
+                                        type: 'info',
+                                        title: 'Informacion',
+                                        text: 'Se registro el pago con Tarjeta'
+                                    })    
+
+
+                
+
+                                    }
+
+                                
            },
 
-
-      
+         
 
             validarVenta(){
 
@@ -1441,6 +1636,16 @@
                 if (!me.impuesto) me.errorMostrarMsjVenta.push("Ingrese el impuesto de venta");
                 if (me.arrayDetalle.length<=0) me.errorMostrarMsjVenta.push("Ingrese detalles");
 
+                if (me.arrayFormaPago.length==0) me.errorMostrarMsjVenta.push("Debe escoger una forma de pago");
+
+                /*Validar si no se registro la forma de pago*/
+                if(me.idforma==0){
+
+                    me.errorMostrarMsjVenta.push("Debe seleccionar tipo de forma de pago..");
+
+                }
+
+               
                 /*Validar para el tipo de forma de pago*/
                 if(me.idforma==2){
 
@@ -1472,7 +1677,7 @@
                     me.idproveedor=0;
                     me.tipo_identificacion='FACTURA';
                     me.num_compra='';
-                    me.impuesto=0.20;
+                    me.impuesto=0.12;
                     me.total=0.0;
                     me.idproducto=0;
                     me.producto='';
@@ -1481,9 +1686,29 @@
                     me.arrayDetalle=[];
   
             },
+
+            mostrarPagos(){
+
+                let me= this;
+                me.listado=3;
+                me.idproveedor=0;
+                me.tipo_identificacion='FACTURA';
+                me.num_compra='';
+                me.impuesto=0.12;
+                me.arrayPago=[];
+
+
+            },
+
             ocultarDetalle(){
                 this.listado=1;
             },
+
+            ocultarPagos(){
+                this.listado=1;
+         
+            },
+
 
             verVenta(id){
 

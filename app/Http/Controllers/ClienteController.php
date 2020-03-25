@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use Carbon\Carbon;
 
 class ClienteController extends Controller
 {
@@ -51,8 +52,12 @@ class ClienteController extends Controller
 
         $cont=Cliente::count();
 
+        $hoy = Carbon::now()->format('d/m/Y');
+      
         $pdf= \PDF::loadView('pdf.clientespdf',['clientes'=>$clientes,'cont'=>$cont]);
-        return $pdf->download('clientes.pdf');
+        return $pdf->download('clientes-'.$hoy.'.pdf');
+
+        //return $pdf->download('clientes.pdf');
     }
 
     

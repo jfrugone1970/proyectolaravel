@@ -8,12 +8,15 @@ class Pagos extends Model
 {
     //
     protected $table = 'pagos';
-    
-    protected $fillable = [
+    protected $fillable =[
+        'factura',
         'tipo_pago',
         'idcliente',
+        'nombre',
         'idbanco',
+        'nombre_banco',
         'idtarjeta',
+        'nombre_tarjeta',
         'valor'
     ];
 
@@ -34,4 +37,6 @@ class Pagos extends Model
     {
         return $this->belongsTo('App\Tarjeta');
     } 
+
+    
 }

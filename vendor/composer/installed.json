@@ -1523,17 +1523,17 @@
     },
     {
         "name": "league/flysystem",
-        "version": "1.0.64",
-        "version_normalized": "1.0.64.0",
+        "version": "1.0.66",
+        "version_normalized": "1.0.66.0",
         "source": {
             "type": "git",
             "url": "https://github.com/thephpleague/flysystem.git",
-            "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
+            "reference": "021569195e15f8209b1c4bebb78bd66aa4f08c21"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
-            "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
+            "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/021569195e15f8209b1c4bebb78bd66aa4f08c21",
+            "reference": "021569195e15f8209b1c4bebb78bd66aa4f08c21",
             "shasum": ""
         },
         "require": {
@@ -1563,7 +1563,7 @@
             "spatie/flysystem-dropbox": "Allows you to use Dropbox storage",
             "srmklive/flysystem-dropbox-v2": "Allows you to use Dropbox storage for PHP 5 applications"
         },
-        "time": "2020-02-05T18:14:17+00:00",
+        "time": "2020-03-17T18:58:12+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2712,17 +2712,17 @@
     },
     {
         "name": "phpspec/prophecy",
-        "version": "v1.10.2",
-        "version_normalized": "1.10.2.0",
+        "version": "v1.10.3",
+        "version_normalized": "1.10.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpspec/prophecy.git",
-            "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9"
+            "reference": "451c3cd1418cf640de218914901e51b064abb093"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpspec/prophecy/zipball/b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
-            "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
+            "url": "https://api.github.com/repos/phpspec/prophecy/zipball/451c3cd1418cf640de218914901e51b064abb093",
+            "reference": "451c3cd1418cf640de218914901e51b064abb093",
             "shasum": ""
         },
         "require": {
@@ -2736,7 +2736,7 @@
             "phpspec/phpspec": "^2.5 || ^3.2",
             "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5 || ^7.1"
         },
-        "time": "2020-01-20T15:57:02+00:00",
+        "time": "2020-03-05T15:02:03+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

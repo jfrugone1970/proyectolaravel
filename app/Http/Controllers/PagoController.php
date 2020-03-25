@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Banco;
+use App\ClienteBanco;
 use App\Cliente;
+use App\Tarjeta;
+use App\ClienteTarjeta;
 use App\Pagos;
+use App\Venta;
 
 class PagoController extends Controller
 {
@@ -14,8 +20,8 @@ class PagoController extends Controller
         //
         if(!$request->ajax()) return redirect('/');
 
-        $buscar= $request->buscar;
-        $criterio= $request->criterio;
+        $buscar= $request->buscarS;
+        $criterio= $request->criterioS;
 
         if($buscar==''){
 
@@ -45,17 +51,34 @@ class PagoController extends Controller
        
     }
 
+    
     public function store(Request $request)
     {
-        if(!$request->ajax()) return redirect('/');
-        $pago= new Pagos();
-        $pago->tipo_pago = $request->tipo_pago;
-        $pago->idcliente = $request->idcliente;
-        $pago->idbanco = $request->idbanco;
-        $pago->idtarjeta = $request->idtarjeta;
-        $pago->valor = $request->valor;
+        if (!$request->ajax()) return redirect('/');
+ 
+        try{
+            DB::beginTransaction();
+ 
+            $mytime= Carbon::now('America/Guayaquil');
+ 
+            $pagos = new Pagos();
+            $pagos->factura = $request->factura;
+            $pagos->tipo_pago = $request->tipo_pago;
+            $pagos->idcliente = $request->idcliente;
+            $pagos->nombre = $request->nombre;
+            $pagos->idbanco = $request->idbanco;
+            $pagos->nombre_banco = $request->nombre_banco;
+            $pagos->idtarjeta = $request->idtarjeta;
+            $pagos->nombre_tarjeta = $request->nombre_tarjeta;
+            $pagos->valor = $request->valor;
 
-        $pago->save();
+            $pagos->save();
+            
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
     }
+
 
 }

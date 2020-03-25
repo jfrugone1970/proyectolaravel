@@ -79,8 +79,12 @@ class BancoController extends Controller
 
         $cont=ClienteBanco::count();
 
+        
+        $hoy = Carbon::now()->format('d/m/Y');
         $pdf= \PDF::loadView('pdf.bancospdf',['clienteban'=>$clienteban,'cont'=>$cont]);
-        return $pdf->download('bancos.pdf');
+        return $pdf->download('bancos-'.$hoy.'.pdf');
+
+        //return $pdf->download('bancos.pdf');
         
 
     }
@@ -124,7 +128,7 @@ class BancoController extends Controller
       
             $bancoc = ClienteBanco::join('clientes','clientes_banco.idcliente','=','clientes.id')
             ->join('bancos','clientes_banco.idbanco','=','bancos.id')
-            ->select('clientes_banco.id','clientes_banco.idcliente','clientes_banco.idbanco','clientes_banco.tipo_cta',
+            ->select('clientes_banco.id','clientes_banco.idcliente','clientes_banco.idbanco','clientes_banco.banco','clientes_banco.tipo_cta',
             'clientes_banco.cuenta as numero_cuenta','clientes_banco.estado','clientes_banco.banco',
             'clientes.nombre as nombre_cliente')
             ->orderBy('clientes_banco.id', 'desc')->paginate(3);
@@ -135,8 +139,8 @@ class BancoController extends Controller
             $bancoc = ClienteBanco::join('clientes','clientes_banco.idcliente','=','clientes.id')
             ->join('bancos','clientes_banco.idbanco','=','bancos.id')
             ->select('clientes_banco.id','clientes_banco.idcliente','clientes_banco.idbanco',
-            'clientes_banco.tipo_cta','clientes_banco.cuenta as numero_cuenta','clientes_banco.estado','clientes_banco.banco',
-            'clientes.nombre as nombre_cliente')
+            'clientes_banco.banco','clientes_banco.tipo_cta','clientes_banco.cuenta as numero_cuenta',
+            'clientes_banco.estado','clientes_banco.banco','clientes.nombre as nombre_cliente')
             ->where('clientes_banco.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('clientes_banco.id', 'desc')->paginate(3);
         }

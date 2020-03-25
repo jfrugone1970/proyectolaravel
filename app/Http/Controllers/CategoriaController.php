@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Categoria;
+use Carbon\Carbon;
 
 class CategoriaController extends Controller
 {
@@ -54,8 +55,13 @@ class CategoriaController extends Controller
 
         $cont=Categoria::count();
 
+        $hoy = Carbon::now()->format('d/m/Y');
+
+
         $pdf= \PDF::loadView('pdf.categoriaspdf',['categorias'=>$categorias,'cont'=>$cont]);
-        return $pdf->download('categorias.pdf');
+        return $pdf->download('categorias-'.$hoy.'.pdf');
+
+        //return $pdf->download('categorias.pdf');
     }
 
     public function selectCategoria(Request $request){

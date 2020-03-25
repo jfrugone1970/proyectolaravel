@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Producto;
+use Carbon\Carbon;
 
 class ProductoController extends Controller
 {
@@ -112,9 +113,10 @@ class ProductoController extends Controller
         ->orderBy('productos.nombre', 'desc')->get();
 
         $cont=Producto::count();
-
+        
+        $hoy = Carbon::now()->format('d/m/Y');
         $pdf= \PDF::loadView('pdf.productospdf',['productos'=>$productos,'cont'=>$cont]);
-        return $pdf->download('productos.pdf');
+        return $pdf->download('productos-'.$hoy.'.pdf');
         
 
     }

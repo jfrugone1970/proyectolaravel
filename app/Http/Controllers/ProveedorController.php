@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use Carbon\Carbon;
 
 class ProveedorController extends Controller
 {
@@ -59,8 +60,9 @@ class ProveedorController extends Controller
 
         $cont=Proveedor::count();
 
+        $hoy = Carbon::now()->format('d/m/Y');
         $pdf= \PDF::loadView('pdf.proveedorespdf',['proveedores'=>$proveedores,'cont'=>$cont]);
-        return $pdf->download('proveedores.pdf');
+        return $pdf->download('proveedores-'.$hoy.'.pdf');
     }
 
     public function store(Request $request)
