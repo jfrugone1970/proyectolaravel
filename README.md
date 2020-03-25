@@ -7,12 +7,18 @@
 
 Sistema de Compras y Ventas en Laravel 5.7, Vue.js y Bootstrap
 El presente proyecto de Sistema de Compra y Venta de productos esta desarrollado en el framework de Laravel 5.7, Vue.js, y Boottraps es un sistema de Venta de productos, comprende los siguientes módulos:
+
+<p align="center">
+  <img src="proyectolaravel.png" />
+</p>
+
 1) Categoría
 2) Productos
 3) Clientes
 4) Proveedores
 5) Compras
 6) Ventas
+
 Para lo que se refiere a categoría se refiere a la categoria de productos
 Para lo que es los productos para el manejo de los productos
 Para lo que se refiere a Cliente para el manejo de Catálogo de clientes
@@ -44,6 +50,11 @@ Primero, descargue el instalador de Laravel usando Composer:
 composer global require laravel/installer
 
 Una vez instalado, el comando creará una nueva instalación de Laravel en el directorio que especifique. Por ejemplo, creará un directorio llamado que contiene una nueva instalación de Laravel con todas las dependencias de Laravel ya instaladas:laravel newlaravel new blogblog
+
+Esta informacion es obtenida en el manual de Laravel
+
+<a href="https://laravel.com/docs/5.7" target="_blank">Manual de Laravel - dar click para mayor informacion</a>
+
 
 laravel new blog
 
@@ -81,3 +92,8 @@ RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
+
+Para mayor información visita la página WEB
+
+<a href="https://laravel.com/docs/5.7" target="_blank">Instalacion de Laravel - dar click para mayor informacion</a>
+
