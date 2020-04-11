@@ -11,6 +11,7 @@ use App\Cliente;
 use App\Tarjeta;
 use App\ClienteTarjeta;
 use App\Pagos;
+use App\User;
 use App\Venta;
 
 class PagoController extends Controller
@@ -50,6 +51,22 @@ class PagoController extends Controller
         ];
        
     }
+
+    public function pdf(Request $request, $id){
+
+        $pagos= Pagos::where('id',$id)->orderBy('id','desc')->get();
+
+        $cont=Pagos::where('id',$id)->count();
+       
+        $hoy = Carbon::now()->format('d/m/Y');
+
+        $pdf= \PDF::loadView('pdf.pagos',['pagos'=>$pagos,'cont'=>$cont]);
+        return $pdf->download('pagos-'.$hoy.'.pdf');
+
+      
+    }
+
+
 
     
     public function store(Request $request)

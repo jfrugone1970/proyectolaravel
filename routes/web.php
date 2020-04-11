@@ -130,6 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/tarjetas/activar', 'TarjetaController@activar');
 
         Route::get('/pago/listar', 'PagoController@index');
+        Route::get('/pago/pdf{id}', 'PagoController@pdf')->name('pago_pdf');
         Route::post('/pago/pagar', 'PagoController@store');
             
     });
@@ -227,6 +228,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/tarjetas/activar', 'TarjetaController@activar');
 
         Route::get('/pago/listar', 'PagoController@index');
+        Route::get('/pago/pdf{id}', 'PagoController@pdf')->name('pago_pdf');
         Route::post('/pago/pagar', 'PagoController@store');
         
     });

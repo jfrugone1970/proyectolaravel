@@ -20,6 +20,8 @@
                         <button class="btn btn-primary btn-lg" type="button" @click="mostrarPagos()">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Pagos
                         </button>
+
+
                     </div>
                     <!--listado-->
                    
@@ -105,7 +107,7 @@
                                             </button> &nbsp;
                                         </td>
 
-                                    
+
                                 </tr>
                                
                             </tbody>
@@ -496,6 +498,7 @@
                                         <th>idTarjeta</th>
                                         <th>Tarjeta</th>
                                         <th>Valor</th>
+                                        <th>Imp Pago</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -511,9 +514,17 @@
                                         <td v-text="pago.idtarjeta"></td>
                                         <td v-text="pago.nombre_tarjeta"></td>
                                         <td v-text="pago.valor"></td>
-                      
-                                    
+
+                                        <td>
+                                            
+                                             <button type="button" @click="pdfPago(pago.id,pago.idcliente)" class="btn btn-info btn-sm">
+                                            <i class="fa fa-file fa-2x"></i> Descargar PDF
+                                            </button> &nbsp;
+                                        </td>
+
+                          
                                 </tr>
+
                                
                             </tbody>
                         </table>
@@ -1857,7 +1868,14 @@
                
                 
             },
-           
+
+            pdfPago(id,cliente){
+
+                 window.open('http://127.0.0.1:8000/pago/pdf'+ id + ',' + '_blank');
+
+            },
+
+
         
         },
         

@@ -48468,6 +48468,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -49353,6 +49364,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         pdfVenta: function pdfVenta(id, estado) {
 
             window.open('http://127.0.0.1:8000/venta/pdf' + id + ',' + '_blank');
+        },
+        pdfPago: function pdfPago(id, cliente) {
+
+            window.open('http://127.0.0.1:8000/pago/pdf' + id + ',' + '_blank');
         }
     },
 
@@ -50988,7 +51003,31 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", {
                               domProps: { textContent: _vm._s(pago.valor) }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.pdfPago(pago.id, pago.idcliente)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fa fa-file fa-2x" }),
+                                  _vm._v(
+                                    " Descargar PDF\n                                         "
+                                  )
+                                ]
+                              ),
+                              _vm._v(
+                                "  \n                                     "
+                              )
+                            ])
                           ])
                         })
                       )
@@ -52168,7 +52207,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Tarjeta")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Valor")])
+        _c("th", [_vm._v("Valor")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Imp Pago")])
       ])
     ])
   },
