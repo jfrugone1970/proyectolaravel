@@ -442,11 +442,6 @@
 
 
 
-
-           
-
-            
-
             validarClienteBanco(){
 
                  this.errorClienteBanco=0;
