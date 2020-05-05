@@ -1864,14 +1864,14 @@
             pdfVenta(id,estado){
 
              
-                window.open('http://127.0.0.1:8000/venta/pdf'+ id + ',' + '_blank');
+                window.open('http://127.0.0.1:8080/venta/pdf'+ id + ',' + '_blank');
                
                 
             },
 
             pdfPago(id,cliente){
 
-                 window.open('http://127.0.0.1:8000/pago/pdf'+ id + ',' + '_blank');
+                 window.open('http://127.0.0.1:8080/pago/pdf'+ id + ',' + '_blank');
 
             },
 

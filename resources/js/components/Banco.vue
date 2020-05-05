@@ -626,7 +626,7 @@
            cargarPDF(){
 
               
-               window.open('http://127.0.0.1:8000/bancos/listarPDF', '_blank');
+               window.open('http://127.0.0.1:8080/bancos/listarPDF', '_blank');
       
            },
 

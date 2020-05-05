@@ -358,7 +358,7 @@
 
            cargarPDF(){
 
-               window.open('http://127.0.0.1:8000/producto/listarPDF', '_blank');
+               window.open('http://127.0.0.1:8080/producto/listarPDF', '_blank');
       
            },
 

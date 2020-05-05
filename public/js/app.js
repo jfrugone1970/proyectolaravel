@@ -34811,7 +34811,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cargarPDF: function cargarPDF() {
 
-            window.open('http://127.0.0.1:8000/categoria/listarPDF', '_blank');
+            window.open('http://127.0.0.1:8080/categoria/listarPDF', '_blank');
         },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
 
@@ -36201,7 +36201,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cargarPDF: function cargarPDF() {
 
-            window.open('http://127.0.0.1:8000/producto/listarPDF', '_blank');
+            window.open('http://127.0.0.1:8080/producto/listarPDF', '_blank');
         },
         selectCategoria: function selectCategoria() {
 
@@ -40335,7 +40335,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cargarPDF: function cargarPDF() {
 
-            window.open('http://127.0.0.1:8000/proveedor/listarPDF', '_blank');
+            window.open('http://127.0.0.1:8080/proveedor/listarPDF', '_blank');
         },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
 
@@ -41608,7 +41608,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cargarPDF: function cargarPDF() {
 
-            window.open('http://127.0.0.1:8000/cliente/listarPDF', '_blank');
+            window.open('http://127.0.0.1:8080/cliente/listarPDF', '_blank');
         },
         cambiarPagina: function cambiarPagina(page, buscar, criterio) {
 
@@ -45545,7 +45545,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         pdfCompra: function pdfCompra(id, estado) {
 
-            window.open('http://127.0.0.1:8000/compra/pdf' + id + ',' + '_blank');
+            window.open('http://127.0.0.1:8080/compra/pdf' + id + ',' + '_blank');
         },
         verCompra: function verCompra(id) {
 
@@ -49469,11 +49469,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         pdfVenta: function pdfVenta(id, estado) {
 
-            window.open('http://127.0.0.1:8000/venta/pdf' + id + ',' + '_blank');
+            window.open('http://127.0.0.1:8080/venta/pdf' + id + ',' + '_blank');
         },
         pdfPago: function pdfPago(id, cliente) {
 
-            window.open('http://127.0.0.1:8000/pago/pdf' + id + ',' + '_blank');
+            window.open('http://127.0.0.1:8080/pago/pdf' + id + ',' + '_blank');
         }
     },
 
@@ -53722,7 +53722,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cargarPDF: function cargarPDF() {
 
-            window.open('http://127.0.0.1:8000/bancos/listarPDF', '_blank');
+            window.open('http://127.0.0.1:8080/bancos/listarPDF', '_blank');
         },
         AsignaBanco: function AsignaBanco() {
 
@@ -56498,7 +56498,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         cargarPDF: function cargarPDF() {
 
-            window.open('http://127.0.0.1:8000/tarjetas/listarPDF', '_blank');
+            window.open('http://127.0.0.1:8080/tarjetas/listarPDF', '_blank');
         },
         AsignaTarjeta: function AsignaTarjeta() {
 

@@ -5987,21 +5987,21 @@
     },
     {
         "name": "vlucas/phpdotenv",
-        "version": "v2.6.3",
-        "version_normalized": "2.6.3.0",
+        "version": "v2.6.4",
+        "version_normalized": "2.6.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/vlucas/phpdotenv.git",
-            "reference": "df4c4d08a639be4ef5d6d1322868f9e477553679"
+            "reference": "67d472b1794c986381a8950e4958e1adb779d561"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/df4c4d08a639be4ef5d6d1322868f9e477553679",
-            "reference": "df4c4d08a639be4ef5d6d1322868f9e477553679",
+            "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/67d472b1794c986381a8950e4958e1adb779d561",
+            "reference": "67d472b1794c986381a8950e4958e1adb779d561",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3.9",
+            "php": "^5.3.9 || ^7.0 || ^8.0",
             "symfony/polyfill-ctype": "^1.9"
         },
         "require-dev": {
@@ -6013,7 +6013,7 @@
             "ext-filter": "Required to use the boolean validator.",
             "ext-pcre": "Required to use most of the library."
         },
-        "time": "2020-04-12T15:11:38+00:00",
+        "time": "2020-05-02T13:38:00+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -6032,9 +6032,14 @@
         ],
         "authors": [
             {
+                "name": "Graham Campbell",
+                "email": "graham@alt-three.com",
+                "homepage": "https://gjcampbell.co.uk/"
+            },
+            {
                 "name": "Vance Lucas",
                 "email": "vance@vancelucas.com",
-                "homepage": "http://www.vancelucas.com"
+                "homepage": "https://vancelucas.com/"
             }
         ],
         "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
@@ -6042,6 +6047,16 @@
             "dotenv",
             "env",
             "environment"
+        ],
+        "funding": [
+            {
+                "url": "https://github.com/GrahamCampbell",
+                "type": "github"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
+                "type": "tidelift"
+            }
         ]
     },
     {
