@@ -97,3 +97,33 @@ Para mayor información visita la página WEB
 
 <a href="https://laravel.com/docs/5.7" target="_blank">Instalacion de Laravel - dar click para mayor informacion</a>
 
+Para poder correr mi proyecto de Laravel debes de cambiar el puerto de configuración en el apache de xampp.
+Debes de ejecutar xampp como Administrador
+Una vez que ejecutes el xampp como administrador, en la ventana del Panel de Control del xampp en el botón config seleccionar Apache (httpd.conf), que se abre el archivo httpd.conf
+
+En la ventana de Editor de Edición dar un click en buscar e indicar 8080; así de esta manera
+
+#Listen 12.34.56.78:8080
+Listen 8080
+
+ServerName localhost:8080.
+
+En la ventana de xampp control panel dar un click en config (en el boton de configuracion), seleccionar apache y mysql
+Seleccionar "Service and Port Setting" (Servicios y Configuracion de Puertos)
+
+En Apache dejarlo en puerto principal 8080 (main port), y luego guardar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
