@@ -60,8 +60,10 @@ class PagoController extends Controller
        
         $hoy = Carbon::now()->format('d/m/Y');
 
+        $cliente= Pagos::select('idcliente','nombre')->where('id',$id)->get();
+
         $pdf= \PDF::loadView('pdf.pagos',['pagos'=>$pagos,'cont'=>$cont]);
-        return $pdf->download('pagos-'.$hoy.'.pdf');
+        return $pdf->download('pagos-cliente=>'.$cliente.'Fecha=>'.$hoy.'.pdf');
 
       
     }
