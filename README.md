@@ -113,7 +113,12 @@ Seleccionar "Service and Port Setting" (Servicios y Configuracion de Puertos)
 
 En Apache dejarlo en puerto principal 8080 (main port), y luego guardar.
 
+Si quieres entrar a mi proyecto de laravel el usuario del proyecto es:
+Usuario: Admin1970
+Clave:   Josue2019
 
+Para eso si estas usando el aplicativo xampp, el proyecto lo debes de descargar a la carpeta c:/xampp/htdocs/proyectolaravel 
+es decir dentro de la carpeta htdocs de xampp debe estar registrado el proyecto laravel
 
 
 
