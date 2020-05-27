@@ -120,7 +120,9 @@ Clave:   Josue2019
 Para eso si estas usando el aplicativo xampp, el proyecto lo debes de descargar a la carpeta c:/xampp/htdocs/proyectolaravel 
 es decir dentro de la carpeta htdocs de xampp debe estar registrado el proyecto laravel
 
+Para descargar la base del proyecto esta en el siguiente link o enlace:
 
+https://github.com/jfrugone1970/base_proyectolaravel
 
 
 
